@@ -43,6 +43,9 @@ Si se trabaja en el repositorio que tiene los sub-módulos, **primero actualizar
 Si se hace al revés, se perderán las referencias de los sub-módulos en el repositorio principal y tendremos que resolver conflictos.
 
  si trabajas dentro de algun servicio, tene en cuenta que no debes hacer ningun commit ni push cuando en los cambios del git diff veas a la par del hash del commit un dirty esto podria generar conflictos en el codigo.
+ Deberas hacer el siguiente procedimiento para evitar esto:
+ si modificas un submodule, primero haz commit en el submodule y luego push de los cambios,
+ luego hace commit en el launcher-app y luego haz push, esto mantendra actualizado las referencias en los submodulos.
 
 
 
