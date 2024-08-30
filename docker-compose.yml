@@ -10,7 +10,7 @@ services:
     container_name: client-gateway
     build:
       context: ./client-gateway
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     restart: always
     volumes:
         - ./client-gateway/src:/usr/src/app/src
