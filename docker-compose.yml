@@ -1,0 +1,42 @@
+services:
+  nats-server:
+    container_name: nats-server
+    image: nats:2.10.20-alpine3.20
+    ports:
+      - "${NATS_PORT}:8222"
+
+
+  client-gateway:
+    container_name: client-gateway
+    build:
+      context: ./client-gateway
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+        - ./client-gateway/src:/usr/src/app/src
+    environment:
+      - NODE_ENV=development
+      - NATS_SERVERS=nats://nats-server:4222
+      - PORT=3000
+    ports:
+      - "${CLIENT_GATEWAY_PORT}:3000" 
+    command: pnpm start:dev
+
+
+  document-generator-ms:
+    container_name: document-generator
+    build:
+      context: ./document-generator-ms
+      dockerfile: Dockerfile.dev
+    restart: always
+    volumes:
+      - ./document-generator-ms/src:/usr/src/app/src
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL="mysql://root:12345@localhost:3310/hospi2"
+      - NATS_SERVERS=nats://nats-server:4222
+      - PORT=3001
+    ports:
+      - "${DOCUMENT_GENERATOR_PORT}:3000" 
+    command: pnpm start:dev
+
