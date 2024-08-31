@@ -1,3 +1,4 @@
+
 services:
   nats-server:
     container_name: nats-server
@@ -10,7 +11,7 @@ services:
     container_name: client-gateway
     build:
       context: ./client-gateway
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     restart: always
     volumes:
         - ./client-gateway/src:/usr/src/app/src
