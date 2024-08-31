@@ -1,18 +1,18 @@
 ## Dev
 
 1. clonar el repo
-2.  crear `.env` basado en el `.env.template`
-3. Ejecutar comando: `docker compose up --build`
+2. actualizar las referencias en los submodulos: `git submodule update --init --recursive`
+3.  crear `.env` basado en el `.env.template`
+4. Ejecutar comando: `docker compose up --build`
 
 
 
 
 
 ### Pasos para crear los Git Submodules
-
-
 1. Crear un nuevo repositorio en GitHub
 2. Clonar el repositorio en la máquina local
+
 3. Añadir el submodule, donde `repository_url` es la url del repositorio y `directory_name` es el nombre de la carpeta donde quieres que se guarde el sub-módulo (no debe de existir en el proyecto)
 ```
 git submodule add <repository_url> <directory_name>
