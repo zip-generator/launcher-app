@@ -48,12 +48,12 @@ services:
       context: ./doc-creator-ms
       dockerfile: Dockerfile
     ports:
-      - "${PORT}:4000"
+      - "${DOC_CREATOR_PORT}:4000"
     volumes:
-      - ./src:/usr/src/app/src
+       - ./doc-creator-ms/src:/usr/src/app/src
     environment:
       - NODE_ENV=development
-      - PORT=4000
+      - PORT=3002
       - NATS_SERVERS=nats://nats-server:4222
     command: pnpm start:dev
 
