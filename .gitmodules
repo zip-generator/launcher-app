@@ -4,3 +4,6 @@
 [submodule "document-generator-ms"]
 	path = document-generator-ms
 	url = git@github.com:zip-generator/document-generator-ms.git
+[submodule "doc-creator-ms"]
+	path = doc-creator-ms
+	url = git@github.com:zip-generator/doc-creator-ms.git
