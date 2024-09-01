@@ -5,7 +5,8 @@
 3.  crear `.env` basado en el `.env.template`
 4. Ejecutar comando: `docker compose up --build`
 
-
+# Dato importante
+Si cambias de rama en `launcher-app`, deberas cambiar de rama los submodulos en caso trabajes en uno de los submodulos, si el cambio de rama solo modifica el `launcher-app` no habria problema.
 
 
 
