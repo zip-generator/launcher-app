@@ -16,8 +16,8 @@ services:
         - ./client-gateway/src:/usr/src/app/src
     environment:
       - NODE_ENV=development
-      - NATS_SERVERS=nats://nats-server:4222
-      - PORT=3000
+      - NATS_SERVERS=${NATS_SERVERS}
+      - PORT=${CLIENT_GATEWAY_PORT}
     ports:
       - "${CLIENT_GATEWAY_PORT}:3000" 
     command: pnpm start:dev
@@ -33,9 +33,12 @@ services:
       - ./document-generator-ms/src:/usr/src/app/src
     environment:
       - NODE_ENV=development
-      - DATABASE_URL="mysql://root:12345@localhost:3310/hospi2"
-      - NATS_SERVERS=nats://nats-server:4222
-      - PORT=3001
+      - DATABASE_URL=${DATABASE_URL}
+      - NATS_SERVERS=${NATS_SERVERS}
+      - PORT=${DOCUMENT_GENERATOR_PORT}
+      - API_KEY=${API_KEY}
+      - INVOICE_QUERY_URL=${INVOICE_QUERY_URL}
+      - CARBONE_LIBREOFFICE=${CARBONE_LIBREOFFICE}
     ports:
       - "${DOCUMENT_GENERATOR_PORT}:3000" 
     command: pnpm start:dev
