@@ -6,7 +6,6 @@ services:
     ports:
       - "${NATS_PORT}:8222"
 
-
   client-gateway:
     container_name: client-gateway
     build:
@@ -40,20 +39,3 @@ services:
     ports:
       - "${DOCUMENT_GENERATOR_PORT}:3000" 
     command: pnpm start:dev
-
-  document-creator-ms:
-    container_name: document-creator
-    build:
-      context: ./document-creator-ms
-      dockerfile: Dockerfile.dev
-    restart: always
-    volumes:
-      - ./document-creator-ms/src:/usr/src/app/src
-    environment:
-      - NODE_ENV=development
-      - NATS_SERVERS=nats://nats-server:4222
-      - PORT=3002
-    ports:
-      - "${DOC_CREATOR_PORT}:3000" 
-    command: pnpm start:dev
-
