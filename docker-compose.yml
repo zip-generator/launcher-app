@@ -41,19 +41,19 @@ services:
       - "${DOCUMENT_GENERATOR_PORT}:3000" 
     command: pnpm start:dev
 
-  doc-creator:
-    container_name: document-carbone
-    restart: always
+  document-creator-ms:
+    container_name: document-creator
     build:
-      context: ./doc-creator-ms
-      dockerfile: Dockerfile
-    ports:
-      - "${DOC_CREATOR_PORT}:4000"
+      context: ./document-creator-ms
+      dockerfile: Dockerfile.dev
+    restart: always
     volumes:
-       - ./doc-creator-ms/src:/usr/src/app/src
+      - ./document-creator-ms/src:/usr/src/app/src
     environment:
       - NODE_ENV=development
-      - PORT=3002
       - NATS_SERVERS=nats://nats-server:4222
+      - PORT=3002
+    ports:
+      - "${DOC_CREATOR_PORT}:3000" 
     command: pnpm start:dev
 
