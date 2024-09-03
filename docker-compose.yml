@@ -16,7 +16,7 @@ services:
         - ./client-gateway/src:/usr/src/app/src
     environment:
       - NODE_ENV=development
-      - NATS_SERVERS=${NATS_SERVERS}
+      - NATS_SERVERS=nats://nats-server:4222
       - PORT=${CLIENT_GATEWAY_PORT}
     ports:
       - "${CLIENT_GATEWAY_PORT}:3000" 
@@ -31,14 +31,23 @@ services:
     restart: always
     volumes:
       - ./document-generator-ms/src:/usr/src/app/src
-    environment:
-      - NODE_ENV=development
-      - DATABASE_URL=${DATABASE_URL}
-      - NATS_SERVERS=${NATS_SERVERS}
-      - PORT=${DOCUMENT_GENERATOR_PORT}
-      - API_KEY=${API_KEY}
-      - INVOICE_QUERY_URL=${INVOICE_QUERY_URL}
-      - CARBONE_LIBREOFFICE=${CARBONE_LIBREOFFICE}
+    env_file:
+      "./document-generator-ms/.env"
+    # environment:
+    #   - NODE_ENV=development
+    #   - DATABASE_URL=${DATABASE_URL}
+    #   - NATS_SERVERS=${NATS_SERVERS}
+    #   - PORT=${DOCUMENT_GENERATOR_PORT}
+    #   - API_KEY=${API_KEY}
+    #   - INVOICE_QUERY_URL=${INVOICE_QUERY_URL}
+    #   - CARBONE_LIBREOFFICE=${CARBONE_LIBREOFFICE}
     ports:
       - "${DOCUMENT_GENERATOR_PORT}:3000" 
     command: pnpm start:dev
+    networks:
+      - default
+      - shared-network
+
+networks:
+  shared-network:
+    external: true
