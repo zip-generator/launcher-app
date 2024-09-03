@@ -6,6 +6,12 @@ services:
     ports:
       - "${NATS_PORT}:8222"
 
+  redis:
+    container_name: redis
+    image: redis:6.2.6-alpine
+    ports:
+      - "${REDIS_PORT}:6379"
+
   client-gateway:
     container_name: client-gateway
     build:
