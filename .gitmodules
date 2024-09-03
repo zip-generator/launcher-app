@@ -4,3 +4,6 @@
 [submodule "document-generator-ms"]
 	path = document-generator-ms
 	url = git@github.com:zip-generator/document-generator-ms.git
+[submodule "compression-ms"]
+	path = compression-ms
+	url = git@github.com:zip-generator/compression-ms.git

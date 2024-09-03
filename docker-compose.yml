@@ -54,6 +54,22 @@ services:
       - default
       - shared-network
 
+  compression-ms:
+    container_name: compression-ms
+    build:
+      context: ./compression-ms
+      dockerfile: Dockerfile.dev
+    restart: always
+    volumes:
+      - ./compression-ms/src:/usr/src/app/src
+    env_file:
+      "./compression-ms/.env"
+    ports:
+      - "${COMPRESION_SERVICE_PORT}:3000" 
+    command: pnpm start:dev
+    networks:
+      - default
+
 networks:
   shared-network:
     external: true
