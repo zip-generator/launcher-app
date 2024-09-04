@@ -5,9 +5,9 @@ services:
     image: nats:2.10.20-alpine3.20
     ports:
       - "${NATS_PORT}:8222"
-    command: [
-      "--max_payload=50000000"  # Configuración del tamaño máximo de carga útil (50 MB)
-    ]
+    volumes:
+      - ./nats-server.conf:/etc/nats/nats-server.conf
+    command: -c /etc/nats/nats-server.conf 
 
   redis:
     container_name: redis
