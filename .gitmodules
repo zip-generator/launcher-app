@@ -7,3 +7,7 @@
 [submodule "compression-ms"]
 	path = compression-ms
 	url = git@github.com:zip-generator/compression-ms.git
+
+[submodule "create-document"]
+	path = create-document
+	url = https://github.com/zip-generator/create-document.git

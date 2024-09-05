@@ -80,7 +80,27 @@ services:
     command: pnpm start:dev
     networks:
       - default
-
+  
+  create-document:
+    depends_on:
+      - nats-server
+      - redis
+    container_name: create-document
+    build:
+      context: ./create-document
+      dockerfile: Dockerfile.dev
+    restart: always
+    volumes:
+      - ./create-document/src:/usr/src/app/src
+      - ./temp-data:/usr/src/app/temp-data
+    env_file:
+      "./create-document/.env"
+    ports:
+      - "${CREATE_DOCUMENT_PORT}:3000" 
+    command: pnpm start:dev
+    networks:
+      - default
+      
 networks:
   shared-network:
     external: true
