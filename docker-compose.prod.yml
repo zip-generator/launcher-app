@@ -1,0 +1,87 @@
+
+services:
+  nats-server:
+    container_name: nats-server
+    image: nats:2.10.20-alpine3.20
+    ports:
+      - "${NATS_PORT}:8222"
+
+  redis:
+    container_name: redis
+    image: redis:6.2.6-alpine
+    ports:
+      - "${REDIS_PORT}:6379"
+
+  client-gateway:
+    depends_on:
+      - nats-server
+      - redis
+    container_name: client-gateway
+    build:
+      context: ./client-gateway
+      dockerfile: Dockerfile.prod
+    environment:
+      - NATS_SERVERS=nats://nats-server:4222
+      - PORT=${CLIENT_GATEWAY_PORT}
+    ports:
+      - "${CLIENT_GATEWAY_PORT}:3000" 
+
+  compression-ms:
+    depends_on:
+      - nats-server
+      - redis
+    container_name: compression-ms
+    build:
+      context: ./compression-ms
+      dockerfile: Dockerfile.prod
+    volumes:
+      - ./temp-data:/usr/src/app/temp-data
+    env_file:
+      "./compression-ms/.env"
+    ports:
+      - "${COMPRESION_SERVICE_PORT}:${COMPRESION_SERVICE_PORT}" 
+    networks:
+      - default
+  
+  create-document:
+    depends_on:
+      - nats-server
+      - redis
+    container_name: create-document
+    build:
+      context: ./create-document
+      dockerfile: Dockerfile.prod
+    volumes:
+      - ./temp-data:/usr/src/app/temp-data
+    env_file:
+      "./create-document/.env"
+    environment:
+      - NODE_OPTIONS=--max-old-space-size=5120
+    ports:
+      - "${CREATE_DOCUMENT_PORT}:${CREATE_DOCUMENT_PORT}" 
+    networks:
+      - default
+
+  document-generator-ms:
+    depends_on:
+      - nats-server
+      - redis
+    container_name: document-generator
+    build:
+      context: ./document-generator-ms
+      dockerfile: Dockerfile.prod
+    volumes:
+      - ./temp-data:/usr/src/app/temp-data
+    env_file:
+      "./document-generator-ms/.env"
+    environment:
+      - DOCUMENT_GENERATOR_DATABASE_URL=${DOCUMENT_GENERATOR_DATABASE_URL}
+    ports:
+      - "${DOCUMENT_GENERATOR_PORT}:3000" 
+    networks:
+      - default
+      - shared-network
+
+networks:
+  shared-network:
+    external: true
