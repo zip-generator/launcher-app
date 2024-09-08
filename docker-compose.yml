@@ -95,6 +95,8 @@ services:
       - ./temp-data:/usr/src/app/temp-data
     env_file:
       "./create-document/.env"
+    environment:
+      - NODE_OPTIONS=--max-old-space-size=5120
     ports:
       - "${CREATE_DOCUMENT_PORT}:3000" 
     command: pnpm start:dev
