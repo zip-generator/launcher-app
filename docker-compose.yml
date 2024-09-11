@@ -59,7 +59,6 @@ services:
     command: pnpm start:dev
     networks:
       - default
-      - shared-network
 
   compression-ms:
     depends_on:
@@ -103,6 +102,3 @@ services:
     networks:
       - default
       
-networks:
-  shared-network:
-    external: true

@@ -80,8 +80,4 @@ services:
       - "${DOCUMENT_GENERATOR_PORT}:3000" 
     networks:
       - default
-      - shared-network
 
-networks:
-  shared-network:
-    external: true
